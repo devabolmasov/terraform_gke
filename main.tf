@@ -19,6 +19,7 @@ data "google_container_engine_versions" "gke_version" {
 resource "google_container_cluster" "primary" {
   name     = "itoutposts-gke"
   location = var.region
+  deletion_protection = false
 
   remove_default_node_pool = true
   initial_node_count       = 1
@@ -47,6 +48,7 @@ resource "google_container_node_pool" "primary_nodes" {
 
     # preemptible  = true
     machine_type = "e2-medium"
+    disk_size_gb = 20
     tags         = ["gke-node", "itoutposts-gke"]
     metadata = {
       disable-legacy-endpoints = "true"
