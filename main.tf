@@ -13,7 +13,7 @@ provider "google" {
 
 data "google_container_engine_versions" "gke_version" {
   location = var.region
-  version_prefix = "1.28."
+  version_prefix = "1.27."
 }
 
 resource "google_container_cluster" "primary" {
@@ -33,6 +33,8 @@ resource "google_container_node_pool" "primary_nodes" {
   name       = google_container_cluster.primary.name
   location   = var.region
   cluster    = google_container_cluster.primary.name
+  max_pods_per_node = 50
+  version = data.google_container_engine_versions.gke_version.latest_node_version
   
   node_count = var.gke_num_nodes
 
