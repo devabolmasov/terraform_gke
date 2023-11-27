@@ -1,7 +1,7 @@
 resource "google_compute_firewall" "allow-ssh" {
   project = "premium-guide-403909"
   name    = "gke-ssh"
-  network = google_compute_network.vpc_network.self_link
+  network = google_compute_network.gke_network.self_link
 
   allow {
     protocol = "tcp"
@@ -13,7 +13,7 @@ resource "google_compute_firewall" "allow-ssh" {
 
 resource "google_compute_firewall" "allow-http-https" {
   name    = "gke-http-s"
-  network = google_compute_network.vpc_network.self_link
+  network = google_compute_network.gke_network.self_link
 
   allow {
     protocol = "tcp"
