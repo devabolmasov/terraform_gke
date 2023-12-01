@@ -18,7 +18,7 @@ data "google_container_engine_versions" "gke_version" {
 
 resource "google_container_cluster" "primary" {
   name     = "itoutposts-gke"
-  location = var.region
+  location = var.zone
   deletion_protection = false
 
   remove_default_node_pool = true
@@ -31,7 +31,7 @@ resource "google_container_cluster" "primary" {
 # Separately Managed Node Pool
 resource "google_container_node_pool" "primary_nodes" {
   name       = google_container_cluster.primary.name
-  location   = var.region
+  location   = var.zone
   cluster    = google_container_cluster.primary.name
   max_pods_per_node = 50
   version = data.google_container_engine_versions.gke_version.latest_node_version
@@ -49,7 +49,7 @@ resource "google_container_node_pool" "primary_nodes" {
     }
 
     # preemptible  = true
-    machine_type = "e2-medium"
+    machine_type = var.machine_type
     disk_size_gb = 20
     tags         = ["gke-node", "itoutposts-gke"]
     metadata = {
