@@ -34,7 +34,7 @@ resource "google_container_node_pool" "primary_nodes" {
   location   = var.zone
   cluster    = google_container_cluster.primary.name
   max_pods_per_node = 50
-  version = data.google_container_engine_versions.gke_version.latest_node_version
+  version = data.google_container_engine_versions.gke_version.default_cluster_version
   
   node_count = var.gke_num_nodes
 
