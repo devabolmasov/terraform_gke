@@ -26,6 +26,11 @@ resource "google_container_cluster" "primary" {
 
   network    = google_compute_network.gke_network.name
   subnetwork = google_compute_subnetwork.gke_subnetwork.name
+
+  workload_identity_config {
+    workload_pool = "${var.project}.svc.id.goog"
+  }
+
 }
 
 # Separately Managed Node Pool
@@ -37,7 +42,7 @@ resource "google_container_node_pool" "primary_nodes" {
   version = data.google_container_engine_versions.gke_version.default_cluster_version
   
   node_count = var.gke_num_nodes
-
+  
   node_config {
     oauth_scopes = [
       "https://www.googleapis.com/auth/logging.write",
