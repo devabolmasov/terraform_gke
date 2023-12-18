@@ -51,7 +51,7 @@ resource "google_container_node_pool" "primary_nodes" {
     # preemptible  = true
     machine_type = var.machine_type
     disk_size_gb = 20
-    tags         = ["gke-node", "itoutposts-gke"]
+    tags         = ["gke-node"]
     metadata = {
       disable-legacy-endpoints = "true"
     }
